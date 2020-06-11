@@ -18,7 +18,7 @@ public class LoaningEndpoint {
     @Autowired
     LoaningService loaningService;
 
-    @GetMapping("loaning")
+    @GetMapping("loaningggg")
     public @ResponseBody
     ResponseEntity<List<LoaningAsSubject>> getLoaningList() {
         List<LoaningAsSubject> listLoaningSimple = loaningService.findAllLoanings().stream().map(l -> new LoaningAsSubject(l)).collect(Collectors.toList());
