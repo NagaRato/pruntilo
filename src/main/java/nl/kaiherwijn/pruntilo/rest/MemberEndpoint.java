@@ -1,8 +1,8 @@
 package nl.kaiherwijn.pruntilo.rest;
 
 import nl.kaiherwijn.pruntilo.controller.MemberService;
+import nl.kaiherwijn.pruntilo.dto.asListItem.MemberAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.MemberAsSubject;
-import nl.kaiherwijn.pruntilo.model.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,21 +22,14 @@ public class MemberEndpoint {
 
     @GetMapping("member/{id}")
     public @ResponseBody
-    ResponseEntity<Member> getMemberById(@PathVariable Long id) {
-        Optional<Member> member = service.findMemberById(id);
-
-        if (member.isPresent()) {
-            return new ResponseEntity<Member>(member.get(), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    ResponseEntity<MemberAsSubject> getMemberById(@PathVariable Long id) {
+        return service.findMemberById(id).map(value -> new ResponseEntity<>(new MemberAsSubject(value), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("member")
     public @ResponseBody
-    ResponseEntity<List<MemberAsSubject>> getAllMembers() {
-        List<MemberAsSubject> memberSimpleList = service.findAllMembers().stream().map(m -> new MemberAsSubject(m)).collect(Collectors.toList());
-        return new ResponseEntity<List<MemberAsSubject>>(memberSimpleList, HttpStatus.OK);
+    ResponseEntity<List<MemberAsListitem>> getAllMembers() {
+        List<MemberAsListitem> memberSimpleList = service.findAllMembers().stream().map(MemberAsListitem::new).collect(Collectors.toList());
+        return new ResponseEntity<>(memberSimpleList, HttpStatus.OK);
     }
 }

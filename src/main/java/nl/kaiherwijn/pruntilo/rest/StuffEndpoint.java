@@ -1,8 +1,8 @@
 package nl.kaiherwijn.pruntilo.rest;
 
 import nl.kaiherwijn.pruntilo.controller.StuffService;
+import nl.kaiherwijn.pruntilo.dto.asListItem.StuffAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.StuffAsSubject;
-import nl.kaiherwijn.pruntilo.model.Stuff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,20 +22,11 @@ public class StuffEndpoint {
 
     @GetMapping("stuff/{id}")
     public @ResponseBody ResponseEntity<StuffAsSubject> getStuffById(@PathVariable Long id) {
-        Optional<Stuff> stuffSimple = service.findStuffById(id);
-
-        if (stuffSimple.isPresent()) {
-            return new ResponseEntity<>(new StuffAsSubject(stuffSimple.get()), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return service.findStuffById(id).map(stuff -> new ResponseEntity<>(new StuffAsSubject(stuff), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("stuff")
-    public @ResponseBody ResponseEntity<List<StuffAsSubject>> getStuffList() {
-        List<StuffAsSubject> stuffSimpleList = service.findAllStuff().stream().map(s->new StuffAsSubject(s)).collect(Collectors.toList());
-
-        return new ResponseEntity<>(stuffSimpleList, HttpStatus.OK);
+    public @ResponseBody ResponseEntity<List<StuffAsListitem>> getStuffList() {
+        return new ResponseEntity<>(service.findAllStuff().stream().map(StuffAsListitem::new).collect(Collectors.toList()), HttpStatus.OK);
     }
 }
