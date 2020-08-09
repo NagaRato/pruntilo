@@ -14,9 +14,9 @@ public class StuffAsSubject {
     private List<LoaningAsListitem> loanings = new ArrayList<>();
 
     public StuffAsSubject(Stuff stuff) {
-        this.id = stuff.getId();
-        this.name = stuff.getName();
-        this.loanings = stuff.getLoanings().stream().map(s -> new LoaningAsListitem(s)).collect(Collectors.toList());
+        id = stuff.getId();
+        name = stuff.getName();
+        loanings = stuff.getLoanings().stream().map(s -> new LoaningAsListitem(s)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -33,5 +33,9 @@ public class StuffAsSubject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<LoaningAsListitem> getLoanings() {
+        return loanings;
     }
 }

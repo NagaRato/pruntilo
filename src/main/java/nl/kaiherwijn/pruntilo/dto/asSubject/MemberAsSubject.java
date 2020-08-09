@@ -1,5 +1,6 @@
 package nl.kaiherwijn.pruntilo.dto.asSubject;
 
+import nl.kaiherwijn.pruntilo.dto.asListItem.LoaningAsListitem;
 import nl.kaiherwijn.pruntilo.model.Member;
 
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ public class MemberAsSubject {
 
     private Long id;
     private String name;
-    private List<Long> loaningIds = new ArrayList<>();
+    private List<LoaningAsSubject> loanings = new ArrayList<>();
 
     public MemberAsSubject(Member member) {
         this.id = member.getId();
         this.name = member.getName();
-        this.loaningIds = member.getLoanings().stream().map(m -> m.getId()).collect(Collectors.toList());
+        this.loanings = member.getLoanings().stream().map(m -> new LoaningAsSubject(m)).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -34,11 +35,7 @@ public class MemberAsSubject {
         this.name = name;
     }
 
-    public List<Long> getLoaningIds() {
-        return loaningIds;
-    }
-
-    public void setLoaningIds(List<Long> loaningIds) {
-        this.loaningIds = loaningIds;
+    public List<LoaningAsSubject> getLoanings() {
+        return loanings;
     }
 }

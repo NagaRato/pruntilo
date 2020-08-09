@@ -6,10 +6,12 @@ public class MemberAsListitem {
 
     private Long id;
     private String name;
+    private int countLoanings;
 
     public MemberAsListitem(Member member) {
-        this.id = member.getId();
-        this.name = member.getName();
+        id = member.getId();
+        name = member.getName();
+        countLoanings = member.getLoanings().size();
     }
 
     public Long getId() {
@@ -26,5 +28,9 @@ public class MemberAsListitem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCountLoanings() {
+        return countLoanings;
     }
 }

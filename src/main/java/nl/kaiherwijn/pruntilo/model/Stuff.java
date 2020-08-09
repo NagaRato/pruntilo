@@ -13,6 +13,10 @@ public class Stuff {
     @Column(nullable=false)
     private String name;
 
+    @OneToMany
+    @JoinColumn(name = "stuff_id")
+    private List<Loaning> loanings = new ArrayList<>();
+
     public Stuff() {
     }
 
@@ -40,8 +44,4 @@ public class Stuff {
     public List<Loaning> getLoanings() {
         return loanings;
     }
-
-    @OneToMany
-    @JoinColumn(name = "stuff_id")
-    private List<Loaning> loanings = new ArrayList<>();
 }
