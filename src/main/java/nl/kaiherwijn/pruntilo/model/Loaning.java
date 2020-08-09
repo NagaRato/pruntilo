@@ -12,6 +12,7 @@ public class Loaning {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private LocalDate take;
     private LocalDate bring;
 

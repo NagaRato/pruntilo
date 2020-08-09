@@ -3,14 +3,13 @@ package nl.kaiherwijn.pruntilo.rest;
 import nl.kaiherwijn.pruntilo.controller.StuffService;
 import nl.kaiherwijn.pruntilo.dto.asListItem.StuffAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.StuffAsSubject;
+import nl.kaiherwijn.pruntilo.model.Stuff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,5 +27,11 @@ public class StuffEndpoint {
     @GetMapping("stuff")
     public @ResponseBody ResponseEntity<List<StuffAsListitem>> getStuffList() {
         return new ResponseEntity<>(service.findAllStuff().stream().map(StuffAsListitem::new).collect(Collectors.toList()), HttpStatus.OK);
+    }
+
+    @PostMapping("stuff")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Stuff addStuff(@RequestBody @Valid Stuff stuff) {
+        return service.addStuff(stuff);
     }
 }

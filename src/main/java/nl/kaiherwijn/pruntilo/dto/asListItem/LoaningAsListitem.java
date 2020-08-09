@@ -13,11 +13,11 @@ public class LoaningAsListitem {
     private String membername;
 
     public LoaningAsListitem(Loaning loaning) {
-        this.id = loaning.getId();
-        this.take = loaning.getTake();
-        this.bring = loaning.getBring();
-        this.stuffname = loaning.getStuff().getName();
-        this.membername = loaning.getMember().getName();
+        id = loaning.getId();
+        take = loaning.getTake();
+        bring = loaning.getBring();
+        stuffname = loaning.getStuff().getName();
+        membername = loaning.getMember().getName();
     }
 
     public Long getId() {

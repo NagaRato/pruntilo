@@ -3,14 +3,14 @@ package nl.kaiherwijn.pruntilo.rest;
 import nl.kaiherwijn.pruntilo.controller.LoaningService;
 import nl.kaiherwijn.pruntilo.dto.asListItem.LoaningAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.LoaningAsSubject;
+import nl.kaiherwijn.pruntilo.model.Loaning;
+import nl.kaiherwijn.pruntilo.model.Stuff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,5 +31,11 @@ public class LoaningEndpoint {
     ResponseEntity<List<LoaningAsListitem>> getLoaningList() {
         List<LoaningAsListitem> listLoaningSimple = service.findAllLoanings().stream().map(LoaningAsListitem::new).collect(Collectors.toList());
         return new ResponseEntity<>(listLoaningSimple, HttpStatus.OK);
+    }
+
+    @PostMapping("loaning")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Loaning addLoaning(@RequestBody @Valid Loaning loaning) {
+        return service.addLoaning(loaning);
     }
 }

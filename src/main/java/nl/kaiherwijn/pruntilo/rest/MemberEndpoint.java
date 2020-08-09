@@ -3,14 +3,14 @@ package nl.kaiherwijn.pruntilo.rest;
 import nl.kaiherwijn.pruntilo.controller.MemberService;
 import nl.kaiherwijn.pruntilo.dto.asListItem.MemberAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.MemberAsSubject;
+import nl.kaiherwijn.pruntilo.model.Member;
+import nl.kaiherwijn.pruntilo.model.Stuff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,5 +31,11 @@ public class MemberEndpoint {
     ResponseEntity<List<MemberAsListitem>> getAllMembers() {
         List<MemberAsListitem> memberSimpleList = service.findAllMembers().stream().map(MemberAsListitem::new).collect(Collectors.toList());
         return new ResponseEntity<>(memberSimpleList, HttpStatus.OK);
+    }
+
+    @PostMapping("member")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Member addMember(@RequestBody @Valid Member member) {
+        return service.addMember(member);
     }
 }
