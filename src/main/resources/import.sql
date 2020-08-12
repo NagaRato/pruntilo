@@ -20,7 +20,7 @@ insert into member(name) values('Sandra');
 insert into member(name) values('Kim');
 insert into member(name) values('Ingrid');
 
-insert into loaning(take, bring, stuff_id, member_id)
+insert into loaning(took, brought, stuff_id, member_id)
 ('2019-08-13', '2019-08-26', 1, 2),
 ('2019-08-28', '2019-09-15', 1, 8),
 ('2019-09-17', '2019-09-17', 1, 7),

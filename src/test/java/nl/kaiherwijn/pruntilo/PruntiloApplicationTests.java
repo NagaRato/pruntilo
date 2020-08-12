@@ -1,6 +1,5 @@
 package nl.kaiherwijn.pruntilo;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -13,7 +12,6 @@ import java.util.Random;
 class PruntiloApplicationTests {
 
 	@Test
-	@Ignore
 	void createTestImportSQL() {
 		List parts = new ArrayList<String>();
 		Random random = new Random();
