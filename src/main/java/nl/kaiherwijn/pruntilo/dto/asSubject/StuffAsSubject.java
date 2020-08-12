@@ -5,6 +5,7 @@ import nl.kaiherwijn.pruntilo.model.Stuff;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StuffAsSubject {
@@ -37,5 +38,18 @@ public class StuffAsSubject {
 
     public List<LoaningAsListitem> getLoanings() {
         return loanings;
+    }
+
+    public Stuff.StuffState getState() {
+        if (loanings.stream().filter(m-> m.getBrought() == null).count() > 0) {
+            return Stuff.StuffState.LENT;
+        }
+        else {
+            return Stuff.StuffState.AVAILABLE;
+        }
+    }
+
+    public Map<Integer, Long> getCountLoaningsPerYear() {
+        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTake().getYear(), Collectors.counting()));
     }
 }

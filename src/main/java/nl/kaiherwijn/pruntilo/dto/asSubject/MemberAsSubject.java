@@ -5,18 +5,24 @@ import nl.kaiherwijn.pruntilo.model.Member;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 public class MemberAsSubject {
 
     private Long id;
     private String name;
-    private List<LoaningAsSubject> loanings = new ArrayList<>();
+    private List<LoaningAsListitem> loanings = new ArrayList<>();
+
+    private List<LoaningAsListitem> currentLoanings = new ArrayList<>();
 
     public MemberAsSubject(Member member) {
-        this.id = member.getId();
-        this.name = member.getName();
-        this.loanings = member.getLoanings().stream().map(m -> new LoaningAsSubject(m)).collect(Collectors.toList());
+        id = member.getId();
+        name = member.getName();
+        loanings = member.getLoanings().stream().map(m -> new LoaningAsListitem(m)).collect(Collectors.toList());
+        currentLoanings = member.getLoanings().stream().filter(m-> m.getBrought() == null).map(LoaningAsListitem::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -35,7 +41,15 @@ public class MemberAsSubject {
         this.name = name;
     }
 
-    public List<LoaningAsSubject> getLoanings() {
+    public List<LoaningAsListitem> getCurrentLoanings() {
+        return loanings.stream().filter(l-> l.getBrought() == null).collect(Collectors.toList());
+    }
+
+    public List<LoaningAsListitem> getLoanings() {
         return loanings;
+    }
+
+    public Map<Integer, Long> getCountLoaningsPerYear() {
+        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTake().getYear(), Collectors.counting()));
     }
 }

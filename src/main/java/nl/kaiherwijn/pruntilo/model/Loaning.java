@@ -13,8 +13,8 @@ public class Loaning {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private LocalDate take;
-    private LocalDate bring;
+    private LocalDate took;
+    private LocalDate brought;
 
     @ManyToOne
     @JsonIgnore
@@ -37,20 +37,20 @@ public class Loaning {
         this.id = id;
     }
 
-    public LocalDate getTake() {
-        return take;
+    public LocalDate getTook() {
+        return took;
     }
 
-    public void setTake(LocalDate take) {
-        this.take = take;
+    public void setTook(LocalDate took) {
+        this.took = took;
     }
 
-    public LocalDate getBring() {
-        return bring;
+    public LocalDate getBrought() {
+        return brought;
     }
 
-    public void setBring(LocalDate bring) {
-        this.bring = bring;
+    public void setBrought(LocalDate brought) {
+        this.brought = brought;
     }
 
     public Stuff getStuff() {

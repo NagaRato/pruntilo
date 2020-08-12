@@ -8,11 +8,18 @@ public class StuffAsListitem {
     private int countLoanings;
     private Long id;
     private String name;
+    private final Stuff.StuffState state;
 
     public StuffAsListitem(Stuff stuff) {
-        this.id = stuff.getId();
-        this.name = stuff.getName();
+        id = stuff.getId();
+        name = stuff.getName();
         countLoanings = stuff.getLoanings().size();
+        if (stuff.getLoanings().stream().filter(m-> m.getBrought() == null).count() > 0) {
+            state = Stuff.StuffState.LENT;
+        }
+        else {
+            state = Stuff.StuffState.AVAILABLE;
+        }
     }
 
     public Long getId() {
@@ -33,5 +40,9 @@ public class StuffAsListitem {
 
     public int getCountLoanings() {
         return countLoanings;
+    }
+
+    public Stuff.StuffState getState() {
+        return state;
     }
 }

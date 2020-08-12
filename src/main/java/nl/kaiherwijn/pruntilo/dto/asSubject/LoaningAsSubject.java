@@ -8,7 +8,7 @@ public class LoaningAsSubject {
 
     private Long id;
     private LocalDate take;
-    private LocalDate bring;
+    private LocalDate brought;
     private Long stuffid;
     private String stuffname;
     private Long memberid;
@@ -16,8 +16,8 @@ public class LoaningAsSubject {
 
     public LoaningAsSubject(Loaning loaning) {
         this.id = loaning.getId();
-        this.take = loaning.getTake();
-        this.bring = loaning.getBring();
+        this.take = loaning.getTook();
+        this.brought = loaning.getBrought();
         this.stuffid = loaning.getStuff().getId();
         this.stuffname = loaning.getStuff().getName();
         this.memberid = loaning.getMember().getId();
@@ -40,12 +40,12 @@ public class LoaningAsSubject {
         this.take = take;
     }
 
-    public LocalDate getBring() {
-        return bring;
+    public LocalDate getBrought() {
+        return brought;
     }
 
-    public void setBring(LocalDate bring) {
-        this.bring = bring;
+    public void setBrought(LocalDate brought) {
+        this.brought = brought;
     }
 
     public String getStuffname() {

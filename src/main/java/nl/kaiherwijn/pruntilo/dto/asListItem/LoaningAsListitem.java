@@ -8,14 +8,14 @@ public class LoaningAsListitem {
 
     private Long id;
     private LocalDate take;
-    private LocalDate bring;
+    private LocalDate brought;
     private String stuffname;
     private String membername;
 
     public LoaningAsListitem(Loaning loaning) {
         id = loaning.getId();
-        take = loaning.getTake();
-        bring = loaning.getBring();
+        take = loaning.getTook();
+        brought = loaning.getBrought();
         stuffname = loaning.getStuff().getName();
         membername = loaning.getMember().getName();
     }
@@ -36,12 +36,12 @@ public class LoaningAsListitem {
         this.take = take;
     }
 
-    public LocalDate getBring() {
-        return bring;
+    public LocalDate getBrought() {
+        return brought;
     }
 
-    public void setBring(LocalDate bring) {
-        this.bring = bring;
+    public void setBrought(LocalDate brought) {
+        this.brought = brought;
     }
 
     public String getStuffname() {

@@ -4,13 +4,13 @@ import nl.kaiherwijn.pruntilo.controller.LoaningService;
 import nl.kaiherwijn.pruntilo.dto.asListItem.LoaningAsListitem;
 import nl.kaiherwijn.pruntilo.dto.asSubject.LoaningAsSubject;
 import nl.kaiherwijn.pruntilo.model.Loaning;
-import nl.kaiherwijn.pruntilo.model.Stuff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,5 +37,11 @@ public class LoaningEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     public Loaning addLoaning(@RequestBody @Valid Loaning loaning) {
         return service.addLoaning(loaning);
+    }
+
+    @PutMapping("loaningfinish/{id}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Loaning finishLoaning(@PathVariable Long id) {
+        return service.finishLoaning(id);
     }
 }

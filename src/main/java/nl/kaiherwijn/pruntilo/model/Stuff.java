@@ -7,6 +7,8 @@ import java.util.Set;
 
 @Entity
 public class Stuff {
+    public enum StuffState {AVAILABLE, LENT}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

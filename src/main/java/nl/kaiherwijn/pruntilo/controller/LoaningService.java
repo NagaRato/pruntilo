@@ -1,5 +1,6 @@
 package nl.kaiherwijn.pruntilo.controller;
 
+import nl.kaiherwijn.pruntilo.dto.asListItem.StuffAsListitem;
 import nl.kaiherwijn.pruntilo.exceptions.ConflictException;
 import nl.kaiherwijn.pruntilo.model.Loaning;
 import nl.kaiherwijn.pruntilo.model.Member;
@@ -32,9 +33,7 @@ public class LoaningService {
     }
 
     public Loaning addLoaning(Loaning loaning) {
-        if (loaning.getTake() == null) {
-            throw new ConflictException("Because there is no takedate, the loaning could not be added.");
-        }
+        loaning.setTook(LocalDate.now());
         Optional<Member> memberOfLoangingToAdd = memberService.findMemberById(loaning.getMemberId());
         if (memberOfLoangingToAdd.isPresent()) {
             loaning.setMember(memberOfLoangingToAdd.get());
@@ -43,15 +42,39 @@ public class LoaningService {
             throw new ConflictException("Because there is no member with id " + loaning.getMemberId() + ", the loaning could not be added.");
         }
         Optional<Stuff> stuffOfLoangingToAdd = stuffService.findStuffById(loaning.getStuffId());
-        if (stuffService.findStuffById(loaning.getStuffId()).isPresent()) {
-            loaning.setStuff(stuffOfLoangingToAdd.get());
+        if (stuffOfLoangingToAdd.isPresent()) {
+            Stuff.StuffState state = new StuffAsListitem(stuffOfLoangingToAdd.get()).getState();
+            if (state == Stuff.StuffState.AVAILABLE) {
+                loaning.setStuff(stuffOfLoangingToAdd.get());
+            }
+            else {
+                throw new ConflictException("Because the stuff with id " + loaning.getStuffId() + " is " + state + ", the loaning could not be added.");
+            }
         }
         else {
             throw new ConflictException("Because there is no stuff with id " + loaning.getStuffId() + ", the loaning could not be added.");
         }
-        if (loaning.getBring() != null && loaning.getBring().isBefore(loaning.getTake())) {
-            throw new ConflictException("Because bringdate is before the takedate, the loaning could not be added.");
+
+        if (loaning.getBrought() != null && loaning.getBrought().isBefore(loaning.getTook())) {
+            throw new ConflictException("Because brioughtdate is in the past, the loaning could not be added.");
         }
         return repository.save(loaning);
+    }
+
+    public Loaning finishLoaning(Long id) {
+        Optional<Loaning> loaningToFinish = findLoaningById(id);
+        if (loaningToFinish.isPresent()) {
+            if (loaningToFinish.get().getBrought() == null) {
+                loaningToFinish.get().setBrought(LocalDate.now());
+                return repository.save(loaningToFinish.get());
+            }
+            else {
+                throw new ConflictException("Loaning with id " + id + " is already finished.");
+            }
+        }
+        else {
+            throw new ConflictException("No loaning found with id " + id + ".");
+        }
+
     }
 }
