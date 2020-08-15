@@ -32,38 +32,59 @@
     <table id="CertainLoaning">
         <tr><th>Details of certain loaning</th></tr>
         <tr><td>url: get > loaning/{id}</td></tr>
-        <tr><td>required body:</td></tr>
-        <tr><td>explanation:</td></tr>
-        <tr><td>expectable bodies:</td></tr>
-        <tr><td>return state if succeed:</td></tr>
-        <tr><td>possible errors:</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get the information of the loaning with the id you specified in the url.</td></tr>
+        <tr><td>expectable bodies:<pre>{
+    "id": &lt;long&gt; is the id of the loaning,
+    "took": &lt;date&gt; the date on which the member took the stuff,
+    "brought": &lt;date&gt; the date on which the member brought the stuff back,
+    "stuffid": &lt;long&gt; is the id of the stuff which the member took,
+    "stuffname": &lt;string&gt; the name of the stuff which the member took,
+    "memberid": &lt;long&gt; is the id of the member which the stuff took,
+    "membername": &lt;string&gt; the name of the member which the stuff took
+}</pre></td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
     <table id="ListOfAllLoanings">
         <tr><th>List of all loanings</th></tr>
         <tr><td>url: get > loaning</td></tr>
-        <tr><td>required body:</td></tr>
-        <tr><td>explanation:</td></tr>
-        <tr><td>expectable bodies:</td></tr>
-        <tr><td>return state if succeed:</td></tr>
-        <tr><td>possible errors:</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get a list of summeries of all the registered loanings.</td></tr>
+        <tr><td>expectable bodies:<pre>array of
+{
+    "id": &lt;long&gt; is the id of the loaning,
+    "took": &lt;date&gt; the date on which the member took the stuff,
+    "brought": &lt;date&gt; the date on which the member brought the stuff back,
+    "stuffname": &lt;string&gt; the name of the stuff which the member took,
+    "membername": &lt;string&gt; the name of the member which the stuff took
+}</pre>
+        </td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
     <table id="BeginLoaning">
         <tr><th>Begin a loaning</th></tr>
         <tr><td>url: post > loaning</td></tr>
-        <tr><td>required body:</td></tr>
-        <tr><td>explanation:</td></tr>
-        <tr><td>expectable bodies:</td></tr>
-        <tr><td>return state if succeed:</td></tr>
-        <tr><td>possible errors:</td></tr>
+        <tr><td>required body:<pre>{
+    "stuff": &lt;long required&gt; is the id of the stuff the member wants to loan,
+    "member": &lt;long required&gt; is the id of the member wants to loan the stuff
+}</pre></td></tr>
+        <tr><td>explanation: Register a member takes some with him to loan it.</td></tr>
+        <tr><td>expectable bodies: you get the loaning object you just created, like you get from the <a href="CertainLoaning">endpoint Details of loaning</a>. The took will be automatically filled with the date of today, the brought will be left empty.</td></tr>
+        <tr><td>return state if succeed: 201 Created</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
     <table id="FinishLoaning">
         <tr><th>Finish a Loaning</th></tr>
         <tr><td>url: put > loaning/{id}</td></tr>
-        <tr><td>required body:</td></tr>
-        <tr><td>explanation:</td></tr>
-        <tr><td>expectable bodies:</td></tr>
-        <tr><td>return state if succeed:</td></tr>
-        <tr><td>possible errors:</td></tr>
+        <tr><td>required body:<pre>{
+    "stuff": &lt;long required&gt; is the id of the stuff the member brings back
+}</pre></td></tr>
+        <tr><td>explanation: Register a member brings something back and finishe the loaning with the id you send with the url, if the body contains the id of the stuff which is loaned. If the id of the stuff is not part of the loaning, you get a conflict error, the loaning will not be changed.</td></tr>
+        <tr><td>expectable bodies: you get the loaning object you just created, like you get from the <a href="CertainLoaning">endpoint Details of loaning</a>. The brought will be automatically filled with the date of today.</td></tr>
+        <tr><td>return state if succeed: 202 Accepted</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
 
     <h3>Members</h3>
@@ -90,9 +111,9 @@
 
     <table id="ListOfAllMembers">
         <tr><th>List of all members</th></tr>
-        <tr><td>url: get > member</td></tr>
+        <tr><td>url: get &gt; member</td></tr>
         <tr><td>required body: none</td></tr>
-        <tr><td>explanation: You get a list of summeries of all the registered loanings.</td></tr>
+        <tr><td>explanation: You get a list of summeries of all the registered members.</td></tr>
         <tr><td>expectable bodies:<pre>array of
 {
     "id": &lt;long&gt; is the id of the member,
@@ -106,10 +127,10 @@
 
     <table id="AddNewMember">
         <tr><th>Add new member</th></tr>
-        <tr><td>url: post > member</td></tr>
+        <tr><td>url: post &gt; member</td></tr>
         <tr><td>required body:
 <pre>{
-    "name": &lt;string&gt; name of the member to be added.
+    "name": &lt;string required&gt; name of the member to be added.
 }</pre>
 The name you insert here will be trimmed before adding the stuff.</td></tr>
         <tr><td>The name attribute should be at least 1 character long, after trimming.</td></tr>
@@ -127,7 +148,7 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
     <h2>Stuff</h2>
     <table id="CertainStuff">
         <tr><th>Details of certain stuff</th></tr>
-        <tr><td>url: get > stuff/{id}</td></tr>
+        <tr><td>url: get &gt; stuff/{id}</td></tr>
         <tr><td>required body: none</td></tr>
         <tr><td>explanation: You get the information of the stuff with the id you specified in the url.</td></tr>
         <tr><td>expectable bodies:
@@ -149,7 +170,7 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
 
     <table id="ListOfAllStuff">
         <tr><th>List of all stuff</th></tr>
-        <tr><td>url: get > stuff</td></tr>
+        <tr><td>url: get &gt; stuff</td></tr>
         <tr><td>required body: none</td></tr>
         <tr><td>explanation: You get the information of the stuff with the id you specified in the url.</td></tr>
         <tr><td>expectable bodies:
@@ -169,10 +190,10 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
 
     <table id="AddNewStuff">
         <tr><th>Add new stuff</th></tr>
-        <tr><td>url: post > stuff</td></tr>
+        <tr><td>url: post &gt; stuff</td></tr>
         <tr><td>required body:
 <pre>{
-    "name": &lt;string&gt; name of the stuff to be added.
+    "name": &lt;string required&gt; name of the stuff to be added.
 }</pre>
         The name you insert here will be trimmed before adding the stuff.</td></tr>
         <tr><td>explanation:</td></tr>

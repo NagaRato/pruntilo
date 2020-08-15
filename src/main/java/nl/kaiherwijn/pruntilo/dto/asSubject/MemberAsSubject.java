@@ -14,14 +14,14 @@ public class MemberAsSubject {
 
     private Long id;
     private String name;
-    private List<LoaningAsListitem> loanings = new ArrayList<>();
+    private List<LoaningAsListitem> loanings;
 
-    private List<LoaningAsListitem> currentLoanings = new ArrayList<>();
+    private List<LoaningAsListitem> currentLoanings;
 
     public MemberAsSubject(Member member) {
         id = member.getId();
         name = member.getName();
-        loanings = member.getLoanings().stream().map(m -> new LoaningAsListitem(m)).collect(Collectors.toList());
+        loanings = member.getLoanings().stream().map(LoaningAsListitem::new).collect(Collectors.toList());
         currentLoanings = member.getLoanings().stream().filter(m-> m.getBrought() == null).map(LoaningAsListitem::new).collect(Collectors.toList());
     }
 
@@ -50,6 +50,6 @@ public class MemberAsSubject {
     }
 
     public Map<Integer, Long> getCountLoaningsPerYear() {
-        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTake().getYear(), Collectors.counting()));
+        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTook().getYear(), Collectors.counting()));
     }
 }

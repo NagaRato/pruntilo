@@ -12,12 +12,12 @@ public class StuffAsSubject {
 
     private Long id;
     private String name;
-    private List<LoaningAsListitem> loanings = new ArrayList<>();
+    private List<LoaningAsListitem> loanings;
 
     public StuffAsSubject(Stuff stuff) {
         id = stuff.getId();
         name = stuff.getName();
-        loanings = stuff.getLoanings().stream().map(s -> new LoaningAsListitem(s)).collect(Collectors.toList());
+        loanings = stuff.getLoanings().stream().map(LoaningAsListitem::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -41,7 +41,7 @@ public class StuffAsSubject {
     }
 
     public Stuff.StuffState getState() {
-        if (loanings.stream().filter(m-> m.getBrought() == null).count() > 0) {
+        if (loanings.stream().anyMatch(m -> m.getBrought() == null)) {
             return Stuff.StuffState.LENT;
         }
         else {
@@ -50,6 +50,6 @@ public class StuffAsSubject {
     }
 
     public Map<Integer, Long> getCountLoaningsPerYear() {
-        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTake().getYear(), Collectors.counting()));
+        return loanings.stream().collect(Collectors.groupingBy(l -> l.getTook().getYear(), Collectors.counting()));
     }
 }

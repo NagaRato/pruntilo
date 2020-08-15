@@ -43,7 +43,7 @@ public class LoaningEndpoint {
 
     @PutMapping("loaningfinish/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Loaning finishLoaning(@PathVariable Long id) {
-        return service.finishLoaning(id);
+    public Loaning finishLoaning(@PathVariable Long id, @RequestBody @Valid Loaning loaning) {
+        return service.finishLoaning(id, loaning.getStuffId());
     }
 }

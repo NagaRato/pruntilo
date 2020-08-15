@@ -61,15 +61,20 @@ public class LoaningService {
         return repository.save(loaning);
     }
 
-    public Loaning finishLoaning(Long id) {
+    public Loaning finishLoaning(Long id, Long stuffid) {
         Optional<Loaning> loaningToFinish = findLoaningById(id);
         if (loaningToFinish.isPresent()) {
-            if (loaningToFinish.get().getBrought() == null) {
-                loaningToFinish.get().setBrought(LocalDate.now());
-                return repository.save(loaningToFinish.get());
+            if (loaningToFinish.get().getStuffId().equals(stuffid)) {
+                if (loaningToFinish.get().getBrought() == null) {
+                    loaningToFinish.get().setBrought(LocalDate.now());
+                    return repository.save(loaningToFinish.get());
+                }
+                else {
+                    throw new ConflictException("Loaning with id " + id + " is already finished.");
+                }
             }
             else {
-                throw new ConflictException("Loaning with id " + id + " is already finished.");
+                throw new ConflictException("The loaning with id " + id + " is not about the stuff with id " + stuffid);
             }
         }
         else {

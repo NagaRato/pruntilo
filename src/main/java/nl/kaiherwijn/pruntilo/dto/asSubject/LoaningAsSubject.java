@@ -7,7 +7,7 @@ import java.time.LocalDate;
 public class LoaningAsSubject {
 
     private Long id;
-    private LocalDate take;
+    private LocalDate took;
     private LocalDate brought;
     private Long stuffid;
     private String stuffname;
@@ -16,7 +16,7 @@ public class LoaningAsSubject {
 
     public LoaningAsSubject(Loaning loaning) {
         this.id = loaning.getId();
-        this.take = loaning.getTook();
+        this.took = loaning.getTook();
         this.brought = loaning.getBrought();
         this.stuffid = loaning.getStuff().getId();
         this.stuffname = loaning.getStuff().getName();
@@ -32,12 +32,12 @@ public class LoaningAsSubject {
         this.id = id;
     }
 
-    public LocalDate getTake() {
-        return take;
+    public LocalDate getTook() {
+        return took;
     }
 
-    public void setTake(LocalDate take) {
-        this.take = take;
+    public void setTook(LocalDate took) {
+        this.took = took;
     }
 
     public LocalDate getBrought() {

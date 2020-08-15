@@ -7,14 +7,14 @@ import java.time.LocalDate;
 public class LoaningAsListitem {
 
     private Long id;
-    private LocalDate take;
+    private LocalDate took;
     private LocalDate brought;
     private String stuffname;
     private String membername;
 
     public LoaningAsListitem(Loaning loaning) {
         id = loaning.getId();
-        take = loaning.getTook();
+        took = loaning.getTook();
         brought = loaning.getBrought();
         stuffname = loaning.getStuff().getName();
         membername = loaning.getMember().getName();
@@ -28,12 +28,12 @@ public class LoaningAsListitem {
         this.id = id;
     }
 
-    public LocalDate getTake() {
-        return take;
+    public LocalDate getTook() {
+        return took;
     }
 
-    public void setTake(LocalDate take) {
-        this.take = take;
+    public void setTook(LocalDate took) {
+        this.took = took;
     }
 
     public LocalDate getBrought() {
