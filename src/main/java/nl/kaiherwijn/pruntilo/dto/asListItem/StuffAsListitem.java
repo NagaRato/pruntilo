@@ -5,21 +5,23 @@ import nl.kaiherwijn.pruntilo.model.Stuff;
 
 public class StuffAsListitem {
 
-    private int countLoanings;
+    private long countCurrentLoanings;
+    private long countLoanings;
     private Long id;
     private String name;
-    private final Stuff.StuffState state;
+    private Stuff.StuffState state;
 
     public StuffAsListitem(Stuff stuff) {
         id = stuff.getId();
         name = stuff.getName();
         countLoanings = stuff.getLoanings().size();
-        if (stuff.getLoanings().stream().filter(m-> m.getBrought() == null).count() > 0) {
+        if (stuff.getLoanings().stream().anyMatch(m -> m.getBrought() == null)) {
             state = Stuff.StuffState.LENT;
         }
         else {
             state = Stuff.StuffState.AVAILABLE;
         }
+        countCurrentLoanings = stuff.getLoanings().stream().filter(l-> l.getBrought() == null).count();
     }
 
     public Long getId() {
@@ -38,11 +40,15 @@ public class StuffAsListitem {
         this.name = name;
     }
 
-    public int getCountLoanings() {
+    public long getCountLoanings() {
         return countLoanings;
     }
 
     public Stuff.StuffState getState() {
         return state;
+    }
+
+    public long getCountCurrentLoanings() {
+        return countCurrentLoanings;
     }
 }

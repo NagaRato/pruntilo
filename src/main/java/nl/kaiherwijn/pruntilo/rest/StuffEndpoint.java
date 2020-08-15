@@ -20,11 +20,13 @@ public class StuffEndpoint {
     StuffService service;
 
     @GetMapping("stuff/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<StuffAsSubject> getStuffById(@PathVariable Long id) {
         return service.findStuffById(id).map(stuff -> new ResponseEntity<>(new StuffAsSubject(stuff), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("stuff")
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody ResponseEntity<List<StuffAsListitem>> getStuffList() {
         return new ResponseEntity<>(service.findAllStuff().stream().map(StuffAsListitem::new).collect(Collectors.toList()), HttpStatus.OK);
     }

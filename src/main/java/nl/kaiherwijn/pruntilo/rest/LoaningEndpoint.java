@@ -21,19 +21,21 @@ public class LoaningEndpoint {
     LoaningService service;
 
     @GetMapping("loaning/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<LoaningAsSubject> getLoaningById(@PathVariable Long id) {
         return service.findLoaningById(id).map(value -> new ResponseEntity<>(new LoaningAsSubject(value), HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping("loaning")
+    @ResponseStatus(HttpStatus.OK)
     public @ResponseBody
     ResponseEntity<List<LoaningAsListitem>> getLoaningList() {
         List<LoaningAsListitem> listLoaningSimple = service.findAllLoanings().stream().map(LoaningAsListitem::new).collect(Collectors.toList());
         return new ResponseEntity<>(listLoaningSimple, HttpStatus.OK);
     }
 
-    @PostMapping("loaning")
+    @PostMapping("loaningbegin")
     @ResponseStatus(HttpStatus.CREATED)
     public Loaning addLoaning(@RequestBody @Valid Loaning loaning) {
         return service.addLoaning(loaning);

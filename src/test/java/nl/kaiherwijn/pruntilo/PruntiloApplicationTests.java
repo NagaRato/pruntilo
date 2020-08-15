@@ -13,21 +13,16 @@ class PruntiloApplicationTests {
 
 	@Test
 	void createTestImportSQL() {
-		List parts = new ArrayList<String>();
 		Random random = new Random();
 		LocalDate startDateOfService = LocalDate.now().minusYears(1);
 		for (int i = 0; i < 10; i++) {
 			LocalDate lastTookDate = startDateOfService.plusDays(random.nextInt(10));
 			LocalDate lastBroughtDate = lastTookDate.plusDays(random.nextInt(35));
-			while (lastBroughtDate.isBefore(LocalDate.now())) {
-				parts.add("('" + lastTookDate.toString() + "', '" + lastBroughtDate.toString() + "', " + (i+1) + ", " + (random.nextInt(9)+1) + "),");
+			while (lastBroughtDate.getYear() < 2020) {
+				System.out.println("insert into loaning(took, brought, stuff_id, member_id) values('" + lastTookDate.toString() + "', '" + lastBroughtDate.toString() + "', " + (i+1) + ", " + (random.nextInt(9)+1) + ");");
 				lastTookDate = lastBroughtDate.plusDays(random.nextInt(10));
 				lastBroughtDate = lastTookDate.plusDays(random.nextInt(35));
 			}
 		}
-		System.out.println("insert into loaning(take, bring, stuff_id, member_id)");
-		parts.forEach(System.out::println);
-
 	}
-
 }

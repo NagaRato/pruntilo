@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>developer documentation of pruntilo 0.1</title>
+    <style>
+    table, td, tr {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    table {
+      margin: 10px;
+    }
+    td, pre {
+        width: 800px;
+        white-space: wrap;
+    }
+    th {
+        background: red
+    }
+    </style>
+</head>
+<body style="font-family: arial;">
+    <h1>Pruntilo developer documentation</h1>
+    <i>version 0.1</i>
+    <h2>Assumptions of the results.</h2>
+    When you call a certain entity you get always the simple properties of the entity you asked for (in a EntityAsSubject), plus a summary of the container and list of entities (EntityAsListitem) it belongs to.
+    When you call a list of entities (filtered or not) you will receive a list of summarizes (EntityAsListitem) of the entities in the list.
+    When you call an endpoint to edit or add an object and it succeed, you receive in the body the object which you editted or created. This means you can get attributes which are always empty after creating, because that is in reality too.
+    <h2>Specification of the endpoints</h2>
+    <h3>Loanings</h3>
+    <table id="CertainLoaning">
+        <tr><th>Details of certain loaning</th></tr>
+        <tr><td>url: get > loaning/{id}</td></tr>
+        <tr><td>required body:</td></tr>
+        <tr><td>explanation:</td></tr>
+        <tr><td>expectable bodies:</td></tr>
+        <tr><td>return state if succeed:</td></tr>
+        <tr><td>possible errors:</td></tr>
+    </table>
+    <table id="ListOfAllLoanings">
+        <tr><th>List of all loanings</th></tr>
+        <tr><td>url: get > loaning</td></tr>
+        <tr><td>required body:</td></tr>
+        <tr><td>explanation:</td></tr>
+        <tr><td>expectable bodies:</td></tr>
+        <tr><td>return state if succeed:</td></tr>
+        <tr><td>possible errors:</td></tr>
+    </table>
+    <table id="BeginLoaning">
+        <tr><th>Begin a loaning</th></tr>
+        <tr><td>url: post > loaning</td></tr>
+        <tr><td>required body:</td></tr>
+        <tr><td>explanation:</td></tr>
+        <tr><td>expectable bodies:</td></tr>
+        <tr><td>return state if succeed:</td></tr>
+        <tr><td>possible errors:</td></tr>
+    </table>
+    <table id="FinishLoaning">
+        <tr><th>Finish a Loaning</th></tr>
+        <tr><td>url: put > loaning/{id}</td></tr>
+        <tr><td>required body:</td></tr>
+        <tr><td>explanation:</td></tr>
+        <tr><td>expectable bodies:</td></tr>
+        <tr><td>return state if succeed:</td></tr>
+        <tr><td>possible errors:</td></tr>
+    </table>
+
+    <h3>Members</h3>
+    <table id="CertainMember">
+        <tr><th>Details of certain member</th></tr>
+        <tr><td>url: get > member/{id}</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get the information of the member with the id you specified in the url.</td></tr>
+        <tr><td>expectable bodies:<pre>{
+    "id": &lt;long&gt; is the id of the member,
+    "name": &lt;string&gt; is the name of the member,
+    "loanings": &lt;array&gt; is a list of summeries (like you get in a <a href="#ListOfAllLoanings">list of loanings</a>) of all the loanings of this
+    member,
+    "currentLoanings": &lt;array&gt; is a list of summeries (like you get in a <a href="#ListOfAllLoanings">list of loanings</a>) of all the loanings
+    which this member did not brought
+    back yet,
+    "countLoaningsPerYear": &lt;map, integer as index and long as content&gt; is a list which contains the number of
+    loanings of this member, grouped by year, which is the index, shows only the year in which the loanings are
+    started.
+}</pre></td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+
+    <table id="ListOfAllMembers">
+        <tr><th>List of all members</th></tr>
+        <tr><td>url: get > member</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get a list of summeries of all the registered loanings.</td></tr>
+        <tr><td>expectable bodies:<pre>array of
+{
+    "id": &lt;long&gt; is the id of the member,
+    "name": &lt;string&gt; is the name of the member,
+    "countLoanings": &lt;int&gt; number of all registered loanings of this member,
+    "countCurrentLoanings": &lt;int&gt; number of loanings which this member did not brought back yet
+}</pre></td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+
+    <table id="AddNewMember">
+        <tr><th>Add new member</th></tr>
+        <tr><td>url: post > member</td></tr>
+        <tr><td>required body:
+<pre>{
+    "name": &lt;string&gt; name of the member to be added.
+}</pre>
+The name you insert here will be trimmed before adding the stuff.</td></tr>
+        <tr><td>The name attribute should be at least 1 character long, after trimming.</td></tr>
+        <tr><td>explanation: You add a member to pruntilo.</td></tr>
+        <tr><td>expectable bodies:
+<pre>{
+    "id": &lt;long&gt; the id of the added member,
+    "name": &lt;string&gt; is the name of the added member,
+    "loanings": []
+}</pre>
+</td></tr>
+        <tr><td>return state if succeed: 201 Created</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+    <h2>Stuff</h2>
+    <table id="CertainStuff">
+        <tr><th>Details of certain stuff</th></tr>
+        <tr><td>url: get > stuff/{id}</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get the information of the stuff with the id you specified in the url.</td></tr>
+        <tr><td>expectable bodies:
+<pre>{
+    "id": &lt;long&gt; is the id of the stuff,
+    "name": &lt;string&gt; is the name of the stuff,
+    "loanings": &lt;array&gt; is a list of summeries (like you get in a <a href="#ListOfAllLoanings">list of loanings</a>) of all
+    the loanings of this stuff,
+    "countLoaningsPerYear": &lt;map, integer as index and long as content&gt; is a list which contains the number of
+    loanings of this stuff, grouped by year, which is the index, shows only the year in which the loanings are
+    started.
+    "state": provides whether the stuff is available for your members ("AVAIBLABLE") or not ("LENT"). Available
+    will occur if there are no loanings for this stuff without a brought date, lent will occur if there is a
+    loaning for this stuff without a brought date.
+}</pre></td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+
+    <table id="ListOfAllStuff">
+        <tr><th>List of all stuff</th></tr>
+        <tr><td>url: get > stuff</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: You get the information of the stuff with the id you specified in the url.</td></tr>
+        <tr><td>expectable bodies:
+<pre>array of
+{
+    "countCurrentLoanings": &lt;int&gt; number of loanings which this stuff did not brought back yet,
+    "countLoanings": &lt;int&gt; number of all registered loanings of this stuff,
+    "id": &lt;long&gt; is the id of the stuff,
+    "name": &lt;string&gt; is the name of the stuff,
+    "state": provides whether the stuff is available for your members ("AVAIBLABLE") or not ("LENT"). Available
+    will occur if there are no loanings for this stuff without a brought date, lent will occur if there is a
+    loaning for this stuff without a brought date.
+}</pre></td></tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+
+    <table id="AddNewStuff">
+        <tr><th>Add new stuff</th></tr>
+        <tr><td>url: post > stuff</td></tr>
+        <tr><td>required body:
+<pre>{
+    "name": &lt;string&gt; name of the stuff to be added.
+}</pre>
+        The name you insert here will be trimmed before adding the stuff.</td></tr>
+        <tr><td>explanation:</td></tr>
+        <tr><td>expectable bodies:
+<pre>{
+    "id": &lt;long&gt; the id of the added stuff,
+    "name": &lt;string&gt; is the name of the added stuff,
+    "loanings": []
+}</pre>
+        Loanings will be empty</td></tr>
+        <tr><td>return state if succeed: 201 Created</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+</body>
+</html>

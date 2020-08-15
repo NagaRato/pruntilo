@@ -6,12 +6,14 @@ public class MemberAsListitem {
 
     private Long id;
     private String name;
-    private int countLoanings;
+    private long countLoanings;
+    private long countCurrentLoanings;
 
     public MemberAsListitem(Member member) {
         id = member.getId();
         name = member.getName();
         countLoanings = member.getLoanings().size();
+        countCurrentLoanings = member.getLoanings().stream().filter(l-> l.getBrought() == null).count();
     }
 
     public Long getId() {
@@ -30,7 +32,11 @@ public class MemberAsListitem {
         this.name = name;
     }
 
-    public int getCountLoanings() {
+    public long getCountLoanings() {
         return countLoanings;
+    }
+
+    public long getCountCurrentLoanings() {
+        return countCurrentLoanings;
     }
 }
