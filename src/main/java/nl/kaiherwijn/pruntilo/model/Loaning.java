@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -33,7 +34,7 @@ public class Loaning {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull(message = "the id of a loaning cannot be null") Long id) {
         this.id = id;
     }
 
@@ -41,7 +42,7 @@ public class Loaning {
         return took;
     }
 
-    public void setTook(LocalDate took) {
+    public void setTook(@NotNull(message = "took of a loaning cannot be null") LocalDate took) {
         this.took = took;
     }
 
@@ -65,7 +66,7 @@ public class Loaning {
         return stuffId;
     }
 
-    public void setStuffId(Long stuffId) {
+    public void setStuffId(@NotNull Long stuffId) {
         this.stuffId = stuffId;
     }
 
@@ -81,7 +82,7 @@ public class Loaning {
         return memberId;
     }
 
-    public void setMemberId(Long memberId) {
+    public void setMemberId(@NotNull Long memberId) {
         this.memberId = memberId;
     }
 }
