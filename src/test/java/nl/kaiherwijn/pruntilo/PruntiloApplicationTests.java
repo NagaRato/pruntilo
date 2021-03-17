@@ -14,7 +14,7 @@ class PruntiloApplicationTests {
 	@Test
 	void createTestImportSQL() {
 		Random random = new Random();
-		LocalDate startDateOfService = LocalDate.now().minusYears(1);
+		LocalDate startDateOfService = LocalDate.now().minusYears(5);
 		for (int i = 0; i < 10; i++) {
 			LocalDate lastTookDate = startDateOfService.plusDays(random.nextInt(10));
 			LocalDate lastBroughtDate = lastTookDate.plusDays(random.nextInt(35));

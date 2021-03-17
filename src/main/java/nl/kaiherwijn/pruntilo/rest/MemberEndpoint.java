@@ -40,4 +40,12 @@ public class MemberEndpoint {
     public Member addMember(@RequestBody @Valid Member member) {
         return service.addMember(member);
     }
+
+    @GetMapping("countactiveMember/{year}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public int countactiveMember(@PathVariable int year) {
+        return service.findAllMembers().stream().filter(
+                member -> member.getLoanings().stream().filter(loaning -> loaning.getTook().getYear() == year).count() > 0
+        ).collect(Collectors.toList()).size();
+    }
 }

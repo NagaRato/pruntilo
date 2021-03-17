@@ -36,4 +36,12 @@ public class StuffEndpoint {
     public Stuff addStuff(@RequestBody @Valid Stuff stuff) {
         return service.addStuff(stuff);
     }
+
+    @GetMapping("countactiveStuff/{year}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public int countactiveStuff(@PathVariable int year) {
+        return service.findAllStuff().stream().filter(
+                stuff -> stuff.getLoanings().stream().filter(loaning -> loaning.getTook().getYear() == year).count() > 0
+        ).collect(Collectors.toList()).size();
+    }
 }

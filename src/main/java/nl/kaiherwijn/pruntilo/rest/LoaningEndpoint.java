@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -45,5 +46,17 @@ public class LoaningEndpoint {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Loaning finishLoaning(@PathVariable Long id, @RequestBody @Valid Loaning loaning) {
         return service.finishLoaning(id, loaning.getStuffId());
+    }
+
+    @GetMapping("countLoaningsOfYear/{year}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public int countLoaningsOfYear(@PathVariable int year) {
+        return service.findAllLoanings().stream().filter(loaning -> loaning.getTook().getYear() == year).collect(Collectors.toList()).size();
+    }
+
+    @GetMapping("countLoaningsByYear")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Map<Integer, Integer> countLoaningsByYear() {
+        return service.findAllLoanings().stream().collect(Collectors.groupingBy(loaning -> loaning.getTook().getYear(), Collectors.summingInt(e -> 1)));
     }
 }

@@ -1,0 +1,290 @@
+{
+	"info": {
+		"_postman_id": "1fd43adf-0409-43ab-8199-874ab71a536a",
+		"name": "Pruntilo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get certain loaning",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/loaning/1",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"loaning",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of all loanings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/loaning",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"loaning"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count loanings by year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/countLoaningsOfYear/2021",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"countLoaningsOfYear",
+						"2021"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Loanings grouped by year",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/countLoaningsByYear",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"countLoaningsByYear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add loaning",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stuff\": 7,\n    \"member\": 8\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{location}}/loaning",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"loaning"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Finish loaning",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"stuff\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{location}}/loaningfinish/2",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"loaningfinish",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get certain member",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/member/7",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"member",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of all members",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/member",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count active members",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/countactiveMember/2020",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"countactiveMember",
+						"2020"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add member",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"aa   \"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{location}}/member",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get certain stuff",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/stuff/1",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"stuff",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of all stuff",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/stuff",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"stuff"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count active stuff",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{location}}/countactiveStuff/2017",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"countactiveStuff",
+						"2017"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add stuff",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"e   \"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{location}}/stuff",
+					"host": [
+						"{{location}}"
+					],
+					"path": [
+						"stuff"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
