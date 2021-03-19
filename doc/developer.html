@@ -86,6 +86,24 @@
         <tr><td>return state if succeed: 202 Accepted</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
+    <table id="CountLoaningsOfYear">
+        <tr><th>Count loanings of a given year</th></tr>
+        <tr><td>url: get > countLoaningsOfYear/{year}</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: Returns a list of years which contains a loaning started in that year.</td></tr>
+        <tr><td>expectable bodies: Array of years which contains a loaning started in that year and the count of loanings with a took date in that year.</td></tr>
+        <tr><td>return state if succeed: 202 Accepted</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+    <table id="CountLoaningsGroupedByYear">
+        <tr><th>Count loanings groped by year</th></tr>
+        <tr><td>url: get > countLoaningsByYear</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: Returns a list of loanings by year.</td></tr>
+        <tr><td>expectable bodies: object with many [year]: &lt;int&gt; number of loanings with tookdate in [year]</td></tr>
+        <tr><td>return state if succeed: 202 Accepted</td></tr>
+        <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
 
     <h3>Members</h3>
     <table id="CertainMember">
@@ -108,7 +126,6 @@
         <tr><td>return state if succeed: 200 OK</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
-
     <table id="ListOfAllMembers">
         <tr><th>List of all members</th></tr>
         <tr><td>url: get &gt; member</td></tr>
@@ -124,7 +141,6 @@
         <tr><td>return state if succeed: 200 OK</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
-
     <table id="AddNewMember">
         <tr><th>Add new member</th></tr>
         <tr><td>url: post &gt; member</td></tr>
@@ -145,6 +161,16 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
         <tr><td>return state if succeed: 201 Created</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
+    <table id="CountActiveMembersOfYear">
+        <tr><th>Number of active members in a year</th></tr>
+        <tr><td>url: get &gt; countactiveMember/{year}</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: Returns the number of active members in the given year.</td></tr>
+        <tr><td>expectable bodies: Returns the number of members with 1 or more loanings with a tookdate in the given year.</tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: none.</td></tr>
+    </table>
+
     <h2>Stuff</h2>
     <table id="CertainStuff">
         <tr><th>Details of certain stuff</th></tr>
@@ -167,12 +193,11 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
         <tr><td>return state if succeed: 200 OK</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
-
     <table id="ListOfAllStuff">
         <tr><th>List of all stuff</th></tr>
         <tr><td>url: get &gt; stuff</td></tr>
         <tr><td>required body: none</td></tr>
-        <tr><td>explanation: You get the information of the stuff with the id you specified in the url.</td></tr>
+        <tr><td>explanation: You get a list of summeries of all the registered stuff.</td></tr>
         <tr><td>expectable bodies:
 <pre>array of
 {
@@ -187,7 +212,6 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
         <tr><td>return state if succeed: 200 OK</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
     </table>
-
     <table id="AddNewStuff">
         <tr><th>Add new stuff</th></tr>
         <tr><td>url: post &gt; stuff</td></tr>
@@ -196,7 +220,7 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
     "name": &lt;string required&gt; name of the stuff to be added.
 }</pre>
         The name you insert here will be trimmed before adding the stuff.</td></tr>
-        <tr><td>explanation:</td></tr>
+        <tr><td>explanation: You add a stuff to pruntilo.</td></tr>
         <tr><td>expectable bodies:
 <pre>{
     "id": &lt;long&gt; the id of the added stuff,
@@ -206,6 +230,15 @@ The name you insert here will be trimmed before adding the stuff.</td></tr>
         Loanings will be empty</td></tr>
         <tr><td>return state if succeed: 201 Created</td></tr>
         <tr><td>possible errors: ConflictError, the explanation of the problem is in the description.</td></tr>
+    </table>
+    <table id="CountActiveStuffOfYear">
+        <tr><th>Number of used stuff in a year</th></tr>
+        <tr><td>url: get &gt; countactiveStuff/{year}</td></tr>
+        <tr><td>required body: none</td></tr>
+        <tr><td>explanation: Returns the number of used stuff in the given year.</td></tr>
+        <tr><td>expectable bodies: Returns the number of stuff with 1 or more loanings with a tookdate in the given year.</tr>
+        <tr><td>return state if succeed: 200 OK</td></tr>
+        <tr><td>possible errors: none.</td></tr>
     </table>
 </body>
 </html>
